@@ -7,6 +7,10 @@ Usage (standard-library Python only; terrain.bin must sit beside this file):
   python terrain.py line F9-21 021 480     profile from a reference along a true bearing for 480 m
   python terrain.py water F9-57            where water runs from here: the downhill path, 600 m
   python terrain.py square F9              3 x 3 spot heights (m) across one square, north at the top
+  python terrain.py near F9-57 [radius]    mapped roads, tracks, railway, streams, power lines and buildings
+                                           within radius metres (default 300), with distance and bearing
+
+A reference names a 25 m cell; positions are taken at the centre of that cell.
 
 Grid: 250 m squares A-X west to east, 1-24 south to north; M12-37 = 3 tenths east, 7 tenths north
 of the south-west corner of M12. Bearings are true. Elevations in metres and feet.
@@ -110,6 +114,31 @@ def square(sq):
     return '\n'.join(out)
 
 
+def near(e, n, radius=300.0):
+    """Mapped roads, tracks, railways, streams, power lines and buildings within radius metres (features.bin)."""
+    import json
+    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'features.bin')
+    if not os.path.exists(p): return 'features.bin not found beside terrain.py'
+    f = json.loads(zlib.decompress(open(p, 'rb').read()).decode())
+    best = {}
+    for name, kind, g in f['lines']:
+        for (x0, y0), (x1, y1) in zip(g, g[1:]):
+            dx, dy = x1 - x0, y1 - y0; L2 = dx * dx + dy * dy
+            t = 0.0 if L2 == 0 else max(0.0, min(1.0, ((e - x0) * dx + (n - y0) * dy) / L2))
+            px, py = x0 + t * dx, y0 + t * dy; d = math.hypot(px - e, py - n)
+            run = (math.degrees(math.atan2(dx, dy)) + 360) % 180
+            key = (name, kind.split(' (')[0]) if name else ('', kind.split(' (')[0], round(px / 60), round(py / 60))
+            if d <= radius and (key not in best or d < best[key][0]): best[key] = (d, px, py, name, kind, run)
+    rows = [(d, '%4d m on %03d  %-7s %s%s, running %03d-%03d' % (round(d), round((math.degrees(math.atan2(px - e, py - n)) + 360) % 360) % 360, ref(px, py), name or 'unnamed', ' (' + kind + ')', round(run) % 180, (round(run) + 180) % 360))
+            for d, px, py, name, kind, run in best.values()]
+    for name, kind, x, y in f['points']:
+        d = math.hypot(x - e, y - n)
+        if d <= radius: rows.append((d, '%4d m on %03d  %-7s %s' % (round(d), round((math.degrees(math.atan2(x - e, y - n)) + 360) % 360) % 360, ref(x, y), (name + ' (building)') if name else 'building')))
+    rows.sort()
+    head = 'Mapped features within %d m of %s (distance, true bearing to the nearest point, its reference). As mapped today; unmapped paths may exist.' % (radius, ref(e, n))
+    return head + '\n' + ('\n'.join('  ' + r for _, r in rows[:40]) if rows else '  none')
+
+
 if __name__ == '__main__':
     a = sys.argv[1:]
     if not a or a[0] in ('-h', '--help'): print(__doc__)
@@ -122,4 +151,5 @@ if __name__ == '__main__':
         print(line(e, n, e2, n2))
     elif a[0] == 'water': print(water(*pos(a[1])))
     elif a[0] == 'square': print(square(a[1]))
+    elif a[0] == 'near': print(near(*pos(a[1]), radius=float(a[2]) if len(a) > 2 else 300.0))
     else: print(__doc__)

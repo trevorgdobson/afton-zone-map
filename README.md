@@ -6,6 +6,7 @@ Public map data for a tabletop game set on Afton Mountain at Rockfish Gap, Virgi
 | --- | --- |
 | `skill/SKILL.md` | The game master's rules |
 | `skill/terrain.py`, `skill/terrain.bin` | Terrain lookup from USGS lidar at 10 m: `python terrain.py at F9-57` |
+| `skill/features.bin` | Road, track, stream and building positions for `python terrain.py near F9-57` |
 | `skill/gazetteer.md` | Named places, roads, railway, tunnels and streams by grid square |
 | `atlas/afton-mountain-field-atlas.pdf` | Field atlas for an e-ink tablet: index map and 36 linked sheets |
 | `map/` | Zoomable web map with three base layers |
