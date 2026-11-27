@@ -16,8 +16,10 @@ the default is afton:   python terrain.py --zone rila at M12-55
 A reference names one cell, a tenth of a square each way; positions are taken at the centre of that cell.
 
 Grid: squares lettered west to east and numbered south to north; M12-37 = 3 tenths east, 7 tenths north
-of the south-west corner of M12. afton and rila: 250 m squares A-X, 1-24, so a tenth is 25 m.
-mantasoa: 500 m squares A-P, 1-28, so a tenth is 50 m. Bearings are true. Elevations in metres and feet.
+of the south-west corner of M12. Squares are 250 m, so a tenth is 25 m. afton and rila: columns A-X, rows 1-24.
+A zone with more than 26 columns letters them A-Z and then AA, AB, AC ... as a spreadsheet does (mantasoa: A-AN,
+rows 1-52), and its references read the same way: AB14-37 is square AB14, 3 tenths east, 7 tenths north.
+Bearings are true. Elevations in metres and feet.
 ALWAYS check a position here before describing slope, crest, hollow, draw or creek at it.
 
 Where the Zone is a lake and its shore (mantasoa), `at` ends with where the point lies and how far the mapped
@@ -81,7 +83,9 @@ def h(e, n):
 
 def pos(ref):
     ref = ref.strip().upper(); sq, _, t = ref.partition('-')
-    c = ord(sq[0]) - 65; r = int(sq[1:]) - 1
+    c = ord(sq[0]) - 65; k = 1
+    if NSX > 26 and sq[1:2].isalpha(): c = (c + 1) * 26 + ord(sq[1]) - 65; k = 2      # AA, AB ... follow Z
+    r = int(sq[k:]) - 1
     fe, fn = (int(t[0]) + .5, int(t[1]) + .5) if len(t) == 2 else (5.0, 5.0)
     return E0 + (c + fe / 10) * SQ, N0 + (r + fn / 10) * SQ
 
@@ -89,7 +93,7 @@ def pos(ref):
 def ref(e, n):
     c = int((e - E0) // SQ); r = int((n - N0) // SQ)
     if not (0 <= c < NSX and 0 <= r < NSY): return 'off grid'
-    return '%s%d-%d%d' % (chr(65 + c), r + 1, int(((e - E0) / SQ - c) * 10), int(((n - N0) / SQ - r) * 10))
+    return '%s%d-%d%d' % (chr(65 + c) if c < 26 else chr(64 + c // 26) + chr(65 + c % 26), r + 1, int(((e - E0) / SQ - c) * 10), int(((n - N0) / SQ - r) * 10))
 
 
 def _feat():
@@ -236,11 +240,11 @@ def near(e, n, radius=300.0):
     rows.sort(); tail = ''
     if more[NEAR_B or 0:]: tail += '\n  and %d more buildings within %d m (%d listed, nearest first); see the atlas sheet for their pattern' % (len(more) - NEAR_B, radius, NEAR_B)
     far = f.get('far_buildings', {}).get(ref(e, n).split('-')[0])
-    if far: tail += '\n  plus %d buildings in square %s more than %d m from the water, counted but not listed singly' % (far, ref(e, n).split('-')[0], f.get('far_m', 0))
+    if far: tail += '\n  plus %d buildings in square %s more than %d m from the water and outside the village sheets, counted but not listed singly' % (far, ref(e, n).split('-')[0], f.get('far_m', 0))
     if MASK: tail += '\n  ' + (where(e, n) or 'off the grid')
     head = 'Mapped features within %d m of %s (distance, true bearing to the nearest point, its reference). As mapped today; unmapped paths may exist.' % (radius, ref(e, n))
     if NEAR_B and len(rows) > 40:                             # past the 40 nearest, still list every named place and line in the radius
-        named = [r for r in rows[40:] if ' unnamed (' not in r[1] and not r[1].endswith(' building')][:30]
+        named = [r for r in rows[40:] if ' unnamed (' not in r[1] and not r[1].endswith(' building')][:60]
         if named: tail = '\n  farther off, named only:\n' + '\n'.join('  ' + r for _, r in named) + tail
     return head + '\n' + ('\n'.join('  ' + r for _, r in rows[:40]) if rows else '  none') + tail
 

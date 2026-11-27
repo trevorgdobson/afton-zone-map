@@ -16,6 +16,6 @@ Public files for *Zone Stalker*, a one-player tabletop RPG run by an AI game mas
 | `zones/<zone>/` | `zone.md` (the place), `gazetteer.md`, `terrain.bin` and `features.bin` for the terrain tool, the atlas and the web map |
 | `skill/` | An older flat copy of the Afton files, kept so earlier instructions still work |
 
-Afton and Rila use a grid of 250 m squares, A to X west to east and 1 to 24 south to north, centred on a named point; Mantasoa uses 500 m squares, A to P and 1 to 28. A reference such as M12-37 adds tenths east and north.
+Afton and Rila use a grid of 250 m squares, A to X west to east and 1 to 24 south to north, centred on a named point; Mantasoa uses the same squares on a larger frame, with columns A to Z then AA to AN and rows 1 to 52. A reference such as M12-37 adds tenths east and north.
 
 Data: USGS 3DEP lidar, USGS Historical Topographic Map Collection and USDA NAIP imagery (public domain); Copernicus GLO-30 elevation; ESA WorldCover land cover (CC BY 4.0); named features from OpenStreetMap contributors (ODbL). A game about real places: fiction only, and nobody should enter real derelict or private property because of it.
