@@ -17,21 +17,47 @@ Sources: terrain from USGS 3DEP lidar; named places and lines from OpenStreetMap
 - Afton Mountain Vineyard (place): O2-27
 - Afton Overlook (tourism=viewpoint): M11-03
 - Afton Post Office (building): S13-54
+- Bald Knob (place=locality): S12-02
 - Baldwin Dam (waterway=dam): P1-49
 - Baldwin Pond (natural=water (area)): O2-95
+- Bear Wallow Spring (natural=spring): K4-41
 - Blue Ridge Tunnel Trail (highway=cycleway): M18-03
 - Blue Ridge Tunnel Trail (highway=cycleway): P12-49
 - Blue ridge Tunnel Trail (historic=yes): N12-64
+- Bruce still site (historic=ruins): R9-23
+- Burnt schoolhouse (historic=ruins): S1-69
 - Bus/RV Parking (amenity=parking): L18-90
+- Buzzard Rock (place=locality): F12-33
+- Chestnut Hollow (place=locality): P7-39
+- Coffey graves (landuse=cemetery): L20-43
+- Cold Spring (natural=spring): X8-13
 - Copelands Tetons (natural=peak): D13-00
 - Critzer Family Farm (place=farm): X6-97
+- Dameron cabin (historic=ruins): X13-46
+- Dark Hollow (place=locality): H5-90
 - East Afton (railway=spur junction): V15-46
 - East Trail Blue Ridge Tunnel (tourism=information): N12-73
 - East Trailhead Blue Ridge Tunnel (tourism=information): R13-37
 - East Trailhead Blue Ridge tunnel (amenity=parking (area)): R13-47
 - Elk Mountain (natural=peak): D2-31
+- Fitzgerald homeplace (historic=ruins): O1-79
+- Greenstone cut (historic=mine): D12-99
 - Grey Pine Lodge (tourism=motel): M16-37
+- Harlow chimney (historic=ruins): C15-34
+- Hawk Rock (place=locality): R18-46
+- Irish Hollow (place=locality): D24-20
+- Iron Spring (natural=spring): V18-43
 - King's Gourmet Popcorn (building): L13-40
+- Laurel Hollow (place=locality): V11-71
+- Laurel Spring (natural=spring): M8-95
+- Manganese prospect (historic=mine): S16-59
+- Ochre bank (historic=mine): C20-05
+- Old Coffey place (historic=ruins): L5-06
+- Old Via place (historic=ruins): Q5-58
+- Old iron pit (historic=mine): M10-96
+- Pauper graves (landuse=cemetery): H19-49
+- Pipe Spring (natural=spring): Q23-38
+- Rattlesnake Hollow (place=locality): I15-64
 - Rockfish Gap (natural=saddle): L13-84
 - Rockfish Gap Fee Office (building): M15-67
 - Rockfish Gap Fee Station (amenity=ranger station): M15-67
@@ -40,21 +66,32 @@ Sources: terrain from USGS 3DEP lidar; named places and lines from OpenStreetMap
 - Rockfish Valley Overlook (tourism=viewpoint): H7-00
 - Scott Castle (building): X21-02
 - Shenandoah Valley Overlook (tourism=viewpoint): B1-30
+- Shiflett chimney (historic=ruins): T10-60
+- Shiflett graves (landuse=cemetery): C8-70
+- Signal Knob (place=locality): E22-12
+- Still House Hollow (place=locality): V3-76
 - Stony Ridge (natural=peak): A8-29
+- Sulphur Spring (natural=spring): O19-39
 - Swannanoa (building): I11-15
 - Swannanoa (place=locality): H11-66
 - Swannanoa Golf and Country Club (place): E8-21
+- Sweet Spring (natural=spring): R4-83
 - The Blue Ridge Trail (tourism=information): Q13-86
 - The Blue Ridge Tunnel trail (tourism=information): P12-49
 - The Blue Ridge Tunnel: Claudius Crozet (tourism=information): Q13-22
 - The Blue Ridge Tunnel: The Laborers (tourism=information): O12-85
 - The Inn at Afton (building): L12-60
+- Toll house ruin (historic=ruins): I22-73
+- Tunnel Spring (natural=spring): S10-40
+- Turk burying ground (landuse=cemetery): U21-36
 - Veritas Vineyards and Winery (area (area)): T5-59
+- Via family cemetery (landuse=cemetery): N14-18
 - WPVA-FM (Waynesboro) (man made=tower): C8-45
 - WPVA-FM (Waynesboro) (man made=tower): G11-85
 - West Afton (railway=spur junction): Q13-74
 - West TraiHead Blue Ridge Tunnel (amenity=parking): M18-03
 - West Trailhead Blue Ridge Tunnel Trail (tourism=information): M18-03
+- Wood's sawmill (historic=ruins): G15-09
 
 ## Roads, railway, streams and lines
 
@@ -92,21 +129,26 @@ follow it from square to adjoining square. Lengths count only the part on the gr
 - East Main Street (main road, 1240 m on the grid): H23 H24 I20 I21 I22 I23
 - Stagecoach Road (minor road, 1220 m on the grid): N13 O13 P13 Q13 Q14 R14 S14
 - Elk Mountain Road (minor road, 1210 m on the grid): C1 D1 D2 D3 D4
+- Tunnel builders' road (old road trace, 1080 m on the grid): H1 H2 I2 I3 I4
 - Hayes Branch Road (minor road, 1080 m on the grid): T10 T11 U11 U12 V12 V13
 - Stoneyridge Lane (minor road, 1060 m on the grid): A13 A14
 - Swannanoa Lane (minor road, 940 m on the grid): H11 I11 J11 K11
 - Williams Creek Lane (minor road, 920 m on the grid): P3 Q2 R2 R3 S3. bridge at R3-60
 - Dupont Avenue (service road, 910 m on the grid): A24
+- Old wagon road (old road trace, 910 m on the grid): O21 O22 O23 P21 P22 P23 P24
 - Afton Circle (minor road, 900 m on the grid): K12 L11 L12 L13
+- CCC truck trail (old road trace, 870 m on the grid): G1 G2 H2 H3 H4
 - Vineyard Lane (minor road, 720 m on the grid): L4 M3 M4 N2 N3 O2
 - Elk Meadow Drive (minor road, 700 m on the grid): E8 F7 F8 G7 H8
 - Rocky Top Lane (minor road, 680 m on the grid): O6 P6 Q6 R6
+- Tanbark road (old road trace, 670 m on the grid): I5 I6 J6 J7
 - Little Rock Lane (minor road, 600 m on the grid): W16 X16 X17
 - Ben Lyons Lane (minor road, 590 m on the grid): C15 D14 D15 E14 E15
 - Russell Way (minor road, 580 m on the grid): H10 I10 I11 J11
 - Williams Creek Lane (service road, 570 m on the grid): O4 P3 P4
 - Mount View Drive (minor road, 560 m on the grid): C5 C6 C7 D5
 - Mountain Laurel Lane (minor road, 560 m on the grid): B4 B5 C5
+- Old turnpike trace (old road trace, 550 m on the grid): N22 N23 N24
 - East Main Street (minor road, 530 m on the grid): H24 I20 I21 I23
 - Eagle View Circle (minor road, 460 m on the grid): D3 E3
 - 16th Street (minor road, 460 m on the grid): A23 B23
@@ -153,9 +195,9 @@ J24 out 1450 120 11 S 0 pr
 K24 out 1510 200 13 NW 0 -
 L24 out 1620 260 17 NW 0 -
 M24 out 1680 290 20 NE 0 t
-N24 out 1520 230 18 NE 0 -
+N24 out 1520 230 18 NE 0 t
 O24 out 1520 250 16 NW 0 -
-P24 out 1640 250 19 N 0 -
+P24 out 1640 250 19 N 0 t
 Q24 out 1610 200 17 NW 0 t
 R24 out 1770 260 18 NW 0 t
 S24 out 1800 230 16 NW 0 t
@@ -177,9 +219,9 @@ J23 out 1460 170 15 NW 0 -
 K23 edge 1590 210 14 W 0 -
 L23 edge 1750 240 18 NW 0 -
 M23 edge 1690 300 20 E 0 t
-N23 edge 1520 190 13 SE 0 -
-O23 out 1580 270 18 W 0 -
-P23 out 1730 160 16 flat 0 -
+N23 edge 1520 190 13 SE 0 t
+O23 out 1580 270 18 W 0 t
+P23 out 1730 160 16 flat 0 t
 Q23 out 1670 180 15 NW 0 -
 R23 out 1790 290 17 NW 0 t
 S23 out 1960 350 20 NW 0 t
@@ -201,8 +243,8 @@ J22 edge 1510 90 11 W 0 -
 K22 edge 1610 240 16 W 0 t
 L22 edge 1750 220 15 S 0 t
 M22 edge 1630 300 19 E 0 t
-N22 edge 1530 170 16 NW 0 -
-O22 edge 1630 250 19 NW 0 -
+N22 edge 1530 170 16 NW 0 t
+O22 edge 1630 250 19 NW 0 t
 P22 edge 1780 220 17 NW 0 t
 Q22 edge 1810 310 17 N 0 t
 R22 out 1940 390 22 NW 0 t
@@ -226,7 +268,7 @@ K21 in 1630 160 15 S 0 t
 L21 in 1660 180 13 W 0 -
 M21 in 1640 240 17 E 0 t
 N21 in 1580 230 17 NW 0 -
-O21 in 1670 240 19 NW 0 -
+O21 in 1670 240 19 NW 0 t
 P21 in 1790 230 18 W 0 t
 Q21 edge 1990 330 21 NW 0 t
 R21 edge 2160 410 21 NW 0 R
@@ -581,7 +623,7 @@ F6 in 2180 260 14 SE 0 R
 G6 in 2060 330 19 SE 0 Rt
 H6 in 1910 450 23 SE 0 t
 I6 in 1720 360 20 SE 0 t
-J6 in 1480 370 21 E 0 -
+J6 in 1480 370 21 E 0 t
 K6 in 1270 290 17 SE 0 t
 L6 in 1100 210 14 E 0 rt
 M6 in 1010 90 8 SE 0 r
@@ -604,7 +646,7 @@ E5 edge 2160 200 13 E 0 Rw
 F5 edge 2060 230 17 E 0 w
 G5 edge 1890 370 21 SE 0 tw
 H5 in 1640 420 23 SE 0 w
-I5 in 1470 400 21 S 0 w
+I5 in 1470 400 21 S 0 tw
 J5 in 1360 360 19 SE 0 -
 K5 in 1170 240 16 SE 0 -
 L5 in 1040 170 11 E 0 rt
@@ -627,7 +669,7 @@ D4 out 2330 210 11 N 0 Rrt
 E4 out 2280 260 16 N 0 t
 F4 edge 2190 360 19 NE 0 t
 G4 edge 1930 390 21 NE 0 t
-H4 edge 1670 360 22 E 0 -
+H4 edge 1670 360 22 E 0 t
 I4 in 1400 290 19 E 0 tw
 J4 in 1200 220 14 E 0 rtw
 K4 in 1080 190 9 SE 0 rtw
@@ -651,8 +693,8 @@ D3 out 2440 120 8 NW 6 r
 E3 out 2370 320 17 E 1 r
 F3 out 2140 380 20 SE 0 t
 G3 out 1900 360 20 E 0 t
-H3 edge 1610 380 21 E 0 -
-I3 edge 1390 280 18 SE 0 -
+H3 edge 1610 380 21 E 0 t
+I3 edge 1390 280 18 SE 0 t
 J3 edge 1180 250 16 E 0 -
 K3 edge 1050 110 10 E 0 rtw
 L3 edge 980 120 9 E 0 rw
@@ -674,9 +716,9 @@ C2 out 2340 350 20 W 0 Rr
 D2 out 2510 190 14 NE 7 rt
 E2 out 2300 330 20 E 0 t
 F2 out 2000 340 21 E 0 t
-G2 out 1740 420 22 SE 0 -
-H2 out 1530 360 21 SE 0 -
-I2 out 1300 280 19 E 0 -
+G2 out 1740 420 22 SE 0 t
+H2 out 1530 360 21 SE 0 t
+I2 out 1300 280 19 E 0 t
 J2 out 1120 210 14 E 0 r
 K2 edge 1010 120 10 SE 0 r
 L2 edge 940 140 9 SE 0 r
@@ -698,8 +740,8 @@ C1 out 2460 270 14 NW 0 Rr
 D1 out 2430 300 17 SE 2 r
 E1 out 2180 350 19 SE 0 -
 F1 out 1940 390 20 SE 0 t
-G1 out 1700 320 20 E 0 -
-H1 out 1420 290 19 E 0 -
+G1 out 1700 320 20 E 0 t
+H1 out 1420 290 19 E 0 t
 I1 out 1220 240 15 SE 0 -
 J1 out 1090 190 17 E 0 r
 K1 out 980 110 9 E 0 r

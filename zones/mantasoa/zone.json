@@ -135,5 +135,21 @@
    "Ampiasanomby",
    "Atsinanan'Lazaina"
   ]
+ },
+ "invented_relief": {
+  "seed": 3,
+  "crag_m": 6,
+  "bench_m": 30,
+  "hummock_m": 1.2,
+  "gully_m": 2.5,
+  "steep_deg": [
+   9,
+   22
+  ],
+  "cliff_deg": [
+   30,
+   24
+  ],
+  "note": "Fictional relief added to the source DEM by tools/invent.py; see zones/mantasoa/invented.json for invented features."
  }
 }

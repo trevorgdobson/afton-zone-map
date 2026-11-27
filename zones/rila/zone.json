@@ -106,5 +106,13 @@
    "published_m": 2095
   }
  ],
- "lakes_note": "published_m: the surface heights usually quoted (Wikipedia, Seven Rila Lakes). Non-ASCII text in this file is \\u-escaped on purpose: terrain.py reads it with the platform default encoding."
+ "lakes_note": "published_m: the surface heights usually quoted (Wikipedia, Seven Rila Lakes). Non-ASCII text in this file is \\u-escaped on purpose: terrain.py reads it with the platform default encoding.",
+ "invented_relief": {
+  "seed": 7,
+  "crag_m": 9,
+  "bench_m": 45,
+  "hummock_m": 1.5,
+  "gully_m": 3,
+  "note": "Fictional relief added to the source DEM by tools/invent.py; see zones/rila/invented.json for invented features."
+ }
 }

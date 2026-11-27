@@ -182,6 +182,7 @@ body.print #printsheet{display:block;padding:10px 16px 30px;background:#fff}
         <button type="button" class="chip" data-layer="grid" aria-pressed="true">Grid</button>
         <button type="button" class="chip" data-layer="fog" aria-pressed="true">Fog</button>
         <button type="button" class="chip" data-layer="perimeter" aria-pressed="true">Perimeter</button>
+        <button type="button" class="chip" data-layer="places" aria-pressed="true">Names and ruins</button>
         <button type="button" class="chip" data-layer="legend" aria-pressed="true">Legend</button>
       </div>
       <div class="zoom">
@@ -570,8 +571,8 @@ function lsSet(k,v){try{window.localStorage.setItem(k,v);return true;}catch(e){r
 function lsDel(k){try{window.localStorage.removeItem(k);}catch(e){}}
 
 let state=freshState();
-let layers={schematic:true,graticule:true,grid:true,perimeter:true,fog:true,legend:true,labels:true};
-const LAYER_NAMES={schematic:'Schematic drawing',graticule:'Sheet edge and graticule',grid:'250 m grid',perimeter:'Zone perimeter',fog:'Fog of the unknown',legend:'Legend',labels:'Names on the map'};
+let layers={schematic:true,graticule:true,grid:true,perimeter:true,fog:true,legend:true,labels:true,places:true};
+const LAYER_NAMES={schematic:'Schematic drawing',graticule:'Sheet edge and graticule',grid:'250 m grid',perimeter:'Zone perimeter',fog:'Fog of the unknown',legend:'Legend',labels:'Names on the map',places:'Names and ruins'};
 let view={e:0,n:0,s:0.1};
 let filter={run:'all',hidden:{}};
 let tool='move';
@@ -691,7 +692,7 @@ function tilePump(){
 // Reads tiles.json, then tries one coarse tile of each layer. A page saved on its own, with no tiles folder, ends up with every layer unavailable.
 function startTiles(){
   const go=function(m){
-    if(m)tiles.man=m;tiles.ready=true;
+    if(m){tiles.man=m;loadPlaces();}tiles.ready=true;
     Object.keys(tiles.man.layers).forEach(function(k){const r=tiles.man.layers[k].tiles[tiles.man.minzoom];const t=tileGet(k,tiles.man.minzoom,r[0],r[1]);if(t.st===0)tileStart(t);});
     syncBase();draw();
   };
@@ -860,6 +861,34 @@ function drawGrid(g){
   }
   g.restore();
 }
+// ---------- named places and ruins (places.json beside this page: tools/afton/build_places.py) ----------
+let places=null;
+function loadPlaces(){
+  try{fetch('places.json').then(function(r){if(!r.ok)throw new Error('none');return r.json();}).then(function(d){
+    if(!d||!Array.isArray(d.points)||!Array.isArray(d.lines))return;
+    const num=function(v){return typeof v==='number'&&isFinite(v)&&Math.abs(v)<20000;},nm=function(v){return typeof v==='string'?v.slice(0,60):'';};
+    places={points:d.points.filter(function(p){return p&&num(p.e)&&num(p.n);}).slice(0,500).map(function(p){return {e:p.e,n:p.n,kind:nm(p.kind),name:nm(p.name)};}),
+      lines:d.lines.filter(function(l){return l&&Array.isArray(l.pts)&&l.pts.length>1&&l.pts.every(function(q){return Array.isArray(q)&&num(q[0])&&num(q[1]);});}).slice(0,100).map(function(l){return {name:nm(l.name),pts:l.pts.slice(0,400)};})};
+    draw();}).catch(function(){});}catch(e){}
+}
+function drawPlaces(g){
+  const big=view.s>=0.22,u=Math.max(2.6,Math.min(5,view.s*9)),font='italic '+(view.s>=0.5?13:11.5)+'px '+F_HAND;
+  places.lines.forEach(function(l){
+    g.save();g.strokeStyle=C_INK;g.lineWidth=1.3;g.setLineDash([6,4]);g.beginPath();
+    l.pts.forEach(function(q,i){const p=w2s(q[0],q[1]);if(i)g.lineTo(p[0],p[1]);else g.moveTo(p[0],p[1]);});strokeC(g);g.restore();
+    if(big&&layers.labels){const q=l.pts[Math.floor(l.pts.length/2)],p=w2s(q[0],q[1]);if(p[0]>-80&&p[1]>-20&&p[0]<W+80&&p[1]<H+20)halo(g,l.name,p[0]+7,p[1]-9,C_INK,font);}
+  });
+  places.points.forEach(function(q){
+    const p=w2s(q.e,q.n),x=p[0],y=p[1];if(x<-120||y<-20||x>W+120||y>H+20)return;
+    g.save();g.strokeStyle=C_INK;g.fillStyle=C_INK;g.lineWidth=1.3;
+    if(q.kind==='ruins'){[[-0.55,0.38],[0.55,0.38],[0,-0.52]].forEach(function(d){g.beginPath();g.arc(x+d[0]*u,y+d[1]*u,0.34*u,0,7);g.fill();});}
+    else if(q.kind==='cemetery'){g.fillStyle='rgba(240,236,220,0.9)';g.fillRect(x-u,y-u,2*u,2*u);g.strokeRect(x-u,y-u,2*u,2*u);g.beginPath();g.moveTo(x,y-0.65*u);g.lineTo(x,y+0.65*u);g.moveTo(x-0.42*u,y-0.2*u);g.lineTo(x+0.42*u,y-0.2*u);g.stroke();}
+    else if(q.kind==='spring'){g.strokeStyle=INKS.blue;g.fillStyle='rgba(240,236,220,0.9)';g.lineWidth=1.6;g.beginPath();g.arc(x,y,0.8*u,0,7);g.fill();g.stroke();}
+    else if(q.kind==='mine'){g.lineWidth=1.7;g.beginPath();g.moveTo(x-0.8*u,y-0.8*u);g.lineTo(x+0.8*u,y+0.8*u);g.moveTo(x-0.8*u,y+0.8*u);g.lineTo(x+0.8*u,y-0.8*u);strokeC(g);}
+    g.restore();
+    if(big&&layers.labels){if(q.kind==='locality')halo(g,q.name,x,y,C_INK,font,'center');else halo(g,q.name,x+u+5,y,C_INK,font);}
+  });
+}
 function drawPerimeter(g){
   const c=w2s(0,0),r=ZONE_R*view.s;
   g.save();g.strokeStyle=INKS.purple;g.lineWidth=2.2;g.setLineDash([12,7]);g.beginPath();g.arc(c[0],c[1],r,0,Math.PI*2);strokeC(g,3);g.setLineDash([]);
@@ -955,6 +984,7 @@ function render(){
   if(layers.grid&&!tb)drawGrid(g);
   if(layers.fog)drawFog(g);
   if(layers.grid&&tb)drawGrid(g);   // over a tiled base the grid goes on top of the fog, or its letters are lost
+  if(layers.places&&places)drawPlaces(g);
   if(layers.perimeter)drawPerimeter(g);
 
   // plotted bearing lines
