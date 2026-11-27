@@ -30,9 +30,9 @@ If Claude says it cannot download anything, use the file method below.
 - **Keep the SAVE file** the game gives you at the end. To play again, start a new chat the same way and attach it.
 - **Do not open `gm-only-do-not-open/`** in the pack. It holds how everything works, and finding that out is the game.
 
-## Playing as a group
+## With a reading group
 
-Everyone plays their own stalker in the same Zone, so what you learn is true for your friends too. Compare notes. Ask the game for "a report from the Zone" after a run and post it to the group. Nobody will tell you whether your friend's theory is right.
+Everyone plays their own stalker in their own game, on the same mountain: Afton Mountain at Rockfish Gap, Virginia. Nothing in the Zone is random, so what you learn should hold for your friends too. Compare notes. Ask the game for "a report from the Zone" after a run and post it to the group. Nobody will tell you whether your friend's theory is right.
 
 ## Maps
 
