@@ -1,17 +1,20 @@
-# Afton Zone map data
+# Zone Stalker: maps and rules
 
-Public map data for a tabletop game set on Afton Mountain at Rockfish Gap, Virginia. Nothing here is secret: it is the real ground, in the game's grid.
+Public files for *Zone Stalker*, a one-player tabletop RPG run by an AI game master, after *Roadside Picnic*. Each Zone sits on a real mountain, and the game master answers from real ground. Nothing here is secret: the hidden rules are not in this repository.
+
+**Want to play?** Read [PLAY.md](PLAY.md). You need a starter message or a guest pack from whoever invited you.
+
+| Zone | Where | Field atlas | Web map |
+| --- | --- | --- | --- |
+| `afton` | Afton Mountain at Rockfish Gap, Virginia | [PDF](https://trevorgdobson.github.io/afton-zone-map/zones/afton/atlas/afton-mountain-field-atlas.pdf) | [open](https://trevorgdobson.github.io/afton-zone-map/zones/afton/map/) |
+| `rila` | The Seven Rila Lakes, Bulgaria | [PDF, in Bulgarian](https://trevorgdobson.github.io/afton-zone-map/zones/rila/atlas/rila-seven-lakes-field-atlas.pdf) | not yet |
 
 | Path | What it is |
 | --- | --- |
-| `skill/SKILL.md` | The game master's rules |
-| `skill/terrain.py`, `skill/terrain.bin` | Terrain lookup from USGS lidar at 10 m: `python terrain.py at F9-57` |
-| `skill/features.bin` | Road, track, stream and building positions for `python terrain.py near F9-57` |
-| `skill/state.py` | Run bookkeeping: clock, load, lights, status line |
-| `skill/gazetteer.md` | Named places, roads, railway, tunnels and streams by grid square |
-| `atlas/afton-mountain-field-atlas.pdf` | Field atlas for an e-ink tablet: index map and 36 linked sheets |
-| `map/` | Zoomable web map with three base layers |
+| `skills/zone-stalker-rpg/` | The game master's rules (`SKILL.md`), terrain lookup (`terrain.py`), run bookkeeping (`state.py`) |
+| `zones/<zone>/` | `zone.md` (the place), `gazetteer.md`, `terrain.bin` and `features.bin` for the terrain tool, the atlas and the web map |
+| `skill/` | An older flat copy of the Afton files, kept so earlier instructions still work |
 
-Grid: 250 m squares, A to X west to east, 1 to 24 south to north, centred on the gap (38.0315 N, 78.8578 W). A reference such as M12-37 adds tenths east and north.
+Every zone uses a grid of 250 m squares, A to X west to east and 1 to 24 south to north, centred on a named point. A reference such as M12-37 adds tenths east and north.
 
-Data: USGS 3DEP lidar, USGS Historical Topographic Map Collection (Waynesboro East and West, 1973), USDA NAIP imagery, all public domain; named features from OpenStreetMap contributors (ODbL). A game aid: fiction only.
+Data: USGS 3DEP lidar, USGS Historical Topographic Map Collection and USDA NAIP imagery (public domain); Copernicus GLO-30 elevation; named features from OpenStreetMap contributors (ODbL). A game about real places: fiction only, and nobody should enter real derelict or private property because of it.

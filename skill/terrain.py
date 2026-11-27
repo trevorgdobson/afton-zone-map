@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Real ground for the Afton Mountain Zone, from USGS 1 m lidar resampled to 10 m. No secrets here.
+"""Real ground for a Zone, from elevation data packed at 10 m. No secrets here.
 
-Usage (standard-library Python only; terrain.bin must sit beside this file):
+Usage (standard-library Python only). Zone data is read from zones/<zone>/ beside this file (terrain.bin,
+features.bin, zone.json). Choose the zone with --zone NAME first on the line, or the ZONE environment variable;
+the default is afton:   python terrain.py --zone rila at M12-55
   python terrain.py at F9-57               elevation, slope, which way is downhill, landform
   python terrain.py line F9-21 F10-99      profile between two references, every 25 m
   python terrain.py line F9-21 021 480     profile from a reference along a true bearing for 480 m
@@ -17,15 +19,37 @@ of the south-west corner of M12. Bearings are true. Elevations in metres and fee
 ALWAYS check a position here before describing slope, crest, hollow, draw or creek at it.
 """
 import os, sys, zlib, math, array
-N = 600; PX = 10.0; E0 = -3000.0; N0 = -3000.0
+N = 600; PX = 10.0; E0 = -3000.0; N0 = -3000.0; SQ = 250.0; NSQ = 24
+HERE = os.path.dirname(os.path.abspath(__file__))
+ZONE = os.environ.get('ZONE', 'afton')
+ZDIR = HERE
 _d = None
+
+
+def use_zone(name):
+    """Point the tool at zones/<name>/ (beside this file, or two levels up in the repository)."""
+    global ZONE, ZDIR, N, PX, E0, N0, SQ, NSQ, _d
+    import json
+    ZONE = name; _d = None
+    for base in (HERE, os.path.join(HERE, '..', '..')):
+        d = os.path.join(base, 'zones', name)
+        if os.path.exists(os.path.join(d, 'terrain.bin')):
+            ZDIR = d; break
+    else:
+        if os.path.exists(os.path.join(HERE, 'terrain.bin')): ZDIR = HERE          # old flat layout: data beside the script
+        else: sys.exit('zone "%s" not found: no zones/%s/terrain.bin beside terrain.py' % (name, name))
+    zj = os.path.join(ZDIR, 'zone.json')
+    if os.path.exists(zj):
+        z = json.load(open(zj, encoding='utf-8')); SQ = float(z['grid']['size']); NSQ = int(z['grid']['n'])
+        N = int(z['terrain']['n']); PX = float(z['terrain']['px'])
+    E0 = N0 = -SQ * NSQ / 2
 
 
 def _load():
     global _d
     if _d is None:
         a = array.array('h')
-        a.frombytes(zlib.decompress(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'terrain.bin'), 'rb').read()))
+        a.frombytes(zlib.decompress(open(os.path.join(ZDIR, 'terrain.bin'), 'rb').read()))
         if sys.byteorder != 'little': a.byteswap()
         _d = a
     return _d
@@ -43,13 +67,13 @@ def pos(ref):
     ref = ref.strip().upper(); sq, _, t = ref.partition('-')
     c = ord(sq[0]) - 65; r = int(sq[1:]) - 1
     fe, fn = (int(t[0]) + .5, int(t[1]) + .5) if len(t) == 2 else (5.0, 5.0)
-    return E0 + (c + fe / 10) * 250, N0 + (r + fn / 10) * 250
+    return E0 + (c + fe / 10) * SQ, N0 + (r + fn / 10) * SQ
 
 
 def ref(e, n):
-    c = int((e - E0) // 250); r = int((n - N0) // 250)
-    if not (0 <= c < 24 and 0 <= r < 24): return 'off grid'
-    return '%s%d-%d%d' % (chr(65 + c), r + 1, int(((e - E0) / 250 - c) * 10), int(((n - N0) / 250 - r) * 10))
+    c = int((e - E0) // SQ); r = int((n - N0) // SQ)
+    if not (0 <= c < NSQ and 0 <= r < NSQ): return 'off grid'
+    return '%s%d-%d%d' % (chr(65 + c), r + 1, int(((e - E0) / SQ - c) * 10), int(((n - N0) / SQ - r) * 10))
 
 
 COMPASS = ['N', 'NNE', 'NE', 'ENE', 'E', 'ESE', 'SE', 'SSE', 'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW']
@@ -100,7 +124,7 @@ def water(e, n, dist=600):
         if sl < 0.6:
             out.append('  %4d m  %-7s %4d m  levels out (pond, flat or sink)' % (t, ref(e, n), round(h(e, n)))); break
         e += 10 * math.sin(math.radians(d)); n += 10 * math.cos(math.radians(d)); t += 10
-        if not (E0 < e < E0 + 6000 and N0 < n < N0 + 6000):
+        if not (E0 < e < E0 + SQ * NSQ and N0 < n < N0 + SQ * NSQ):
             out.append('  leaves the grid'); break
         if t % 50 == 0: out.append('  %4d m  %-7s %4d m  heading %03d  %s' % (t, ref(e, n), round(h(e, n)), round(d) % 360, landform(e, n).split(' (')[0]))
     out.append('  drop %d m' % round(z0 - h(e, n)))
@@ -117,7 +141,7 @@ def square(sq):
 def near(e, n, radius=300.0):
     """Mapped roads, tracks, railways, streams, power lines and buildings within radius metres (features.bin)."""
     import json
-    p = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'features.bin')
+    p = os.path.join(ZDIR, 'features.bin')
     if not os.path.exists(p): return 'features.bin not found beside terrain.py'
     f = json.loads(zlib.decompress(open(p, 'rb').read()).decode())
     best = {}
@@ -133,14 +157,18 @@ def near(e, n, radius=300.0):
             for d, px, py, name, kind, run in best.values()]
     for name, kind, x, y in f['points']:
         d = math.hypot(x - e, y - n)
-        if d <= radius: rows.append((d, '%4d m on %03d  %-7s %s' % (round(d), round((math.degrees(math.atan2(x - e, y - n)) + 360) % 360) % 360, ref(x, y), (name + ' (building)') if name else 'building')))
+        if d <= radius: rows.append((d, '%4d m on %03d  %-7s %s' % (round(d), round((math.degrees(math.atan2(x - e, y - n)) + 360) % 360) % 360, ref(x, y), (name + ' (' + kind + ')') if name else kind)))
     rows.sort()
     head = 'Mapped features within %d m of %s (distance, true bearing to the nearest point, its reference). As mapped today; unmapped paths may exist.' % (radius, ref(e, n))
     return head + '\n' + ('\n'.join('  ' + r for _, r in rows[:40]) if rows else '  none')
 
 
 if __name__ == '__main__':
+    try: sys.stdout.reconfigure(encoding='utf-8')
+    except Exception: pass
     a = sys.argv[1:]
+    if a[:1] == ['--zone'] and len(a) > 1: ZONE = a[1]; a = a[2:]
+    if a and a[0] not in ('-h', '--help'): use_zone(ZONE)
     if not a or a[0] in ('-h', '--help'): print(__doc__)
     elif a[0] == 'at': print('\n'.join(at(*pos(r)) for r in a[1:]))
     elif a[0] == 'line':

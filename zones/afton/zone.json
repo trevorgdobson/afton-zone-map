@@ -1,0 +1,25 @@
+{
+ "id": "afton",
+ "name": "Afton Mountain",
+ "country": "USA",
+ "centre": {
+  "lat": 38.0315,
+  "lon": -78.8578,
+  "what": "Rockfish Gap"
+ },
+ "grid": {
+  "size": 250,
+  "n": 24
+ },
+ "radius_m": 2500,
+ "terrain": {
+  "n": 600,
+  "px": 10,
+  "source": "USGS 3DEP 1 m lidar, resampled to 10 m"
+ },
+ "check": {
+  "ref": "M12-55",
+  "elevation_m": 542
+ },
+ "units": "contours on the atlas are in feet; the tools answer in metres and feet"
+}
