@@ -1,0 +1,117 @@
+{
+ "id": "mantasoa",
+ "name": "Lac de Mantasoa",
+ "local_name": "Tobindranon'i Mantasoa",
+ "country": "Madagascar",
+ "centre": {
+  "lat": -19.0093,
+  "lon": 47.8789,
+  "what": "a knoll on the shore about 100 m from the water: only the middle of the lake's bounding box, of no importance on the ground"
+ },
+ "grid": {
+  "size": 500,
+  "nx": 16,
+  "ny": 28
+ },
+ "zone": {
+  "kind": "water_band",
+  "what": "the lake as mapped (OpenStreetMap relation 1154835) with its islands, plus a band of shore 100 m inland from the mapped waterline",
+  "osm_relation": 1154835,
+  "band_m": 100,
+  "mask": {
+   "file": "water.bin",
+   "px": 10,
+   "nx": 800,
+   "ny": 1400,
+   "codes": [
+    "land",
+    "shore band",
+    "water",
+    "island"
+   ]
+  }
+ },
+ "terrain": {
+  "nx": 400,
+  "ny": 700,
+  "px": 20,
+  "source": "Copernicus GLO-30 DEM (30 m, 1 arc-second, a radar surface model), cubic-resampled to 20 m",
+  "source_resolution_m": 30,
+  "kind": "DSM: heights include tree canopy (pine and eucalyptus plantation) and roofs; the lake is a flat surface, with no depths",
+  "url": "https://copernicus-dem-30m.s3.amazonaws.com/{tile}/{tile}.tif",
+  "licence": "Copernicus DEM GLO-30, ESA / Airbus, free and open"
+ },
+ "features": {
+  "source": "OpenStreetMap contributors (ODbL), via the Overpass API",
+  "names": "Malagasy and French exactly as mapped, which is what the atlas prints; the lake is given its established French name",
+  "name_mode": "local",
+  "kinds": "settled",
+  "margin_m": 1300,
+  "building_keep_m": 400
+ },
+ "near": {
+  "buildings": 8
+ },
+ "units": "metres throughout: contours on the atlas are in metres (10 m, heavy every 50 m); the tools answer in metres and feet",
+ "cover": {
+  "source": "ESA WorldCover 10 m 2021 v200",
+  "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_S21E045_Map.tif",
+  "licence": "ESA WorldCover project 2021, contains modified Copernicus Sentinel data, CC BY 4.0"
+ },
+ "name_overrides": {
+  "Tobindranon\u2019i Mantasoa": "Lac de Mantasoa"
+ },
+ "kind_overrides": {
+  "Ancien haut fourneau de Jean Laborde": "ruins",
+  "Ancienne fabrique de canons": "ruins",
+  "Jean-Laborde Foundry": "ruins",
+  "Ancienne r\u00e9sidence de Jean Laborde \u00e0 Mantasoa": "historic house"
+ },
+ "landmarks": [
+  {
+   "lat": -18.9613,
+   "lon": 47.88,
+   "label": "la Pointe",
+   "kind": "point of land"
+  }
+ ],
+ "check": {
+  "ref": "E12-14",
+  "elevation_m": 1385,
+  "what": "the lake surface at the most open water, about 340 m from the nearest shore; the line should end WATER (in the Zone)"
+ },
+ "lake": {
+  "surface_m": 1385,
+  "surface_note": "the flat lake surface in the Copernicus GLO-30 model (median 1385.0 m, spread under 0.5 m): the level when the radar flew (TanDEM-X, 2011-2015), not a fixed level",
+  "bathymetry": "none: no depths are known or packed",
+  "water_km2": 15.8,
+  "shore_km": 209,
+  "islands": 5
+ },
+ "atlas": {
+  "file": "lac-de-mantasoa-atlas-de-terrain.pdf",
+  "title": "LAC DE MANTASOA",
+  "subtitle": "MADAGASCAR \u00b7 Atlas de terrain",
+  "short": "Lac de Mantasoa",
+  "centre_phrase": "une butte de la rive, \u00e0 100 m de l\u2019eau",
+  "declination": {
+   "deg_east": -16.3,
+   "year": 2026,
+   "source": "NOAA WMM-2025 for 27 Nov 2026 at the grid centre: 16.34 W, changing 0.09 W per year"
+  },
+  "lang": "fr",
+  "pdf_title": "Lac de Mantasoa : atlas de terrain",
+  "dem_credit": "Copernicus GLO-30 (30 m)",
+  "contour_m": [
+   10,
+   50
+  ],
+  "index_contour_m": [
+   20,
+   100
+  ],
+  "index_scale": 85000,
+  "index_west_m": 1150,
+  "base": "drawn from data in the manner of the Service G\u00e9ographique de Madagascar / FTM sheets; no scanned survey sheet is used (none was found with both coverage of the lake and clear reuse rights)"
+ }
+}
